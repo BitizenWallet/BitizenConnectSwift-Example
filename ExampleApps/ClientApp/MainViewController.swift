@@ -6,10 +6,10 @@ import UIKit
 
 class MainViewController: UIViewController {
     var actionsController: ActionsViewController!
-    var walletConnect: WalletConnect!
+    var bitizenConnect: BitizenConnect!
 
     @IBAction func connect(_ sender: Any) {
-        let connectionUrl = walletConnect.connect()
+        let connectionUrl = bitizenConnect.connect()
         
         print(connectionUrl)
 
@@ -20,8 +20,8 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        walletConnect = WalletConnect(delegate: self)
-        walletConnect.reconnectIfNeeded()
+        bitizenConnect = BitizenConnect(delegate: self)
+        bitizenConnect.reconnectIfNeeded()
     }
 
     func onMainThread(_ closure: @escaping () -> Void) {
@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
     }
 }
 
-extension MainViewController: WalletConnectDelegate {
+extension MainViewController: BitizenConnectDelegate {
     func failedToConnect() {
         onMainThread { [unowned self] in
             UIAlertController.showFailedToConnect(from: self)
@@ -44,7 +44,7 @@ extension MainViewController: WalletConnectDelegate {
 
     func didConnect() {
         onMainThread { [unowned self] in
-            self.actionsController = ActionsViewController.create(walletConnect: self.walletConnect)
+            self.actionsController = ActionsViewController.create(bitizenConnect: self.bitizenConnect)
             if self.presentedViewController == nil {
                 self.present(self.actionsController, animated: false)
             }

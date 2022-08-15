@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "bitizenconnectswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BitizenWallet/BitizenConnectSwift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "3b6aa081a6b6b402b39f7ce2cb432027abb085fe"
+      }
+    },
+    {
       "identity" : "cryptoswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
@@ -52,15 +61,6 @@
       "state" : {
         "revision" : "45e458ec3be46cf0a6eb68bc947f797852dc65d8",
         "version" : "0.1.6"
-      }
-    },
-    {
-      "identity" : "walletconnectswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BitizenWallet/WalletConnectSwift.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "7c5e30d56625908694b0756dcd7d3c58b15f7ae7"
       }
     },
     {

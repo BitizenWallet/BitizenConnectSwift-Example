@@ -1,2 +1,2 @@
-# WalletConnectSwift-Example
-Example code for WalletConnectSwift library
+# BitizenConnectSwift-Example
+Example code for BitizenConnectSwift library

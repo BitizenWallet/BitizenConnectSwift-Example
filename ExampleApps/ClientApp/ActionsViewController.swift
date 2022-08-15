@@ -3,7 +3,7 @@
 //
 
 import UIKit
-import WalletConnectSwift
+import BitizenConnectSwift
 
 /// For testing we recommend to use Rainbow Wallet
 /// MetaMask does not support `eth_gasPrice` and `eth_getTransactionCount` at the moment of testing 01.09.2021
@@ -20,11 +20,11 @@ class ActionsViewController: UIViewController {
     var client: Client!
     var session: Session!
 
-    static func create(walletConnect: WalletConnect) -> ActionsViewController {
+    static func create(bitizenConnect: BitizenConnect) -> ActionsViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "ActionsViewController") as! ActionsViewController
-        controller.client = walletConnect.client
-        controller.session = walletConnect.session
+        controller.client = bitizenConnect.client
+        controller.session = bitizenConnect.session
         return controller
     }
 

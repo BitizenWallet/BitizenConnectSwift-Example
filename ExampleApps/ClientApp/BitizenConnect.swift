@@ -3,22 +3,22 @@
 //
 
 import Foundation
-import WalletConnectSwift
+import BitizenConnectSwift
 
-protocol WalletConnectDelegate {
+protocol BitizenConnectDelegate {
     func failedToConnect()
     func didConnect()
     func didDisconnect()
 }
 
-class WalletConnect {
+class BitizenConnect {
     var client: Client!
     var session: Session!
-    var delegate: WalletConnectDelegate
+    var delegate: BitizenConnectDelegate
 
     let sessionKey = "sessionKey"
 
-    init(delegate: WalletConnectDelegate) {
+    init(delegate: BitizenConnectDelegate) {
         self.delegate = delegate
     }
 
@@ -29,13 +29,13 @@ class WalletConnect {
                            bridgeURL: URL(string: "https://bridge.walletconnect.org")!,
                            key: try! randomKey())
         let clientMeta = Session.ClientMeta(name: "ExampleDApp",
-                                            description: "WalletConnectSwift",
+                                            description: "BitizenConnectSwift",
                                             icons: [],
                                             url: URL(string: "https://safe.gnosis.io")!)
         let dAppInfo = Session.DAppInfo(peerId: UUID().uuidString, peerMeta: clientMeta)
         client = Client(delegate: self, dAppInfo: dAppInfo)
 
-        print("WalletConnect URL: \(wcUrl.absoluteString)")
+        print("BitizenConnectSwift URL: \(wcUrl.absoluteString)")
 
         try! client.connect(to: wcUrl)
         return wcUrl.absoluteString
@@ -65,7 +65,7 @@ class WalletConnect {
     }
 }
 
-extension WalletConnect: ClientDelegate {
+extension BitizenConnect: ClientDelegate {
     func client(_ client: Client, didFailToConnect url: WCURL) {
         delegate.failedToConnect()
     }
