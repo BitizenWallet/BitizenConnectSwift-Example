@@ -14,16 +14,14 @@
 		55B781D224A619A90036F8E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55B781D024A619A90036F8E5 /* LaunchScreen.storyboard */; };
 		55B781D924A61A3C0036F8E5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B781D724A61A3C0036F8E5 /* MainViewController.swift */; };
 		55B781DA24A61A3C0036F8E5 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B781D824A61A3C0036F8E5 /* ScannerViewController.swift */; };
-		55B781DD24A61B0D0036F8E5 /* WalletConnectSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 55B781DC24A61B0D0036F8E5 /* WalletConnectSwift */; };
 		55B781E824A61CE60036F8E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B781E724A61CE60036F8E5 /* AppDelegate.swift */; };
 		55B781EF24A61CE60036F8E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55B781ED24A61CE60036F8E5 /* Main.storyboard */; };
 		55B781F124A61CE70036F8E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55B781F024A61CE70036F8E5 /* Assets.xcassets */; };
 		55B781F424A61CE70036F8E5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55B781F224A61CE70036F8E5 /* LaunchScreen.storyboard */; };
 		55B781FD24A61D480036F8E5 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B781F924A61D480036F8E5 /* MainViewController.swift */; };
 		55B781FE24A61D480036F8E5 /* WalletConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B781FA24A61D480036F8E5 /* WalletConnect.swift */; };
-		55B781FF24A61D480036F8E5 /* HandshakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B781FB24A61D480036F8E5 /* HandshakeViewController.swift */; };
 		55B7820024A61D480036F8E5 /* ActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B781FC24A61D480036F8E5 /* ActionsViewController.swift */; };
-		55B7820324A61D600036F8E5 /* WalletConnectSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 55B7820224A61D600036F8E5 /* WalletConnectSwift */; };
+		AD034D5C28A9FA700048DB4C /* WalletConnectSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AD034D5B28A9FA700048DB4C /* WalletConnectSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +41,6 @@
 		55B781F524A61CE70036F8E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55B781F924A61D480036F8E5 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		55B781FA24A61D480036F8E5 /* WalletConnect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnect.swift; sourceTree = "<group>"; };
-		55B781FB24A61D480036F8E5 /* HandshakeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandshakeViewController.swift; sourceTree = "<group>"; };
 		55B781FC24A61D480036F8E5 /* ActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionsViewController.swift; sourceTree = "<group>"; };
 		55D2F76F26DF861C00E8E80F /* WalletConnectSwift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WalletConnectSwift; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -53,7 +50,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55B781DD24A61B0D0036F8E5 /* WalletConnectSwift in Frameworks */,
 				555DE0B324BC3516002714B9 /* Web3 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55B7820324A61D600036F8E5 /* WalletConnectSwift in Frameworks */,
+				AD034D5C28A9FA700048DB4C /* WalletConnectSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,7 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				55B781FC24A61D480036F8E5 /* ActionsViewController.swift */,
-				55B781FB24A61D480036F8E5 /* HandshakeViewController.swift */,
 				55B781F924A61D480036F8E5 /* MainViewController.swift */,
 				55B781FA24A61D480036F8E5 /* WalletConnect.swift */,
 				55B781E724A61CE60036F8E5 /* AppDelegate.swift */,
@@ -143,7 +138,6 @@
 			);
 			name = ServerApp;
 			packageProductDependencies = (
-				55B781DC24A61B0D0036F8E5 /* WalletConnectSwift */,
 				555DE0B224BC3516002714B9 /* Web3 */,
 			);
 			productName = ServerApp;
@@ -164,7 +158,7 @@
 			);
 			name = ClientApp;
 			packageProductDependencies = (
-				55B7820224A61D600036F8E5 /* WalletConnectSwift */,
+				AD034D5B28A9FA700048DB4C /* WalletConnectSwift */,
 			);
 			productName = ClientApp;
 			productReference = 55B781E524A61CE60036F8E5 /* ClientApp.app */;
@@ -198,8 +192,8 @@
 			);
 			mainGroup = 55B7819F24A616A20036F8E5;
 			packageReferences = (
-				55B781DB24A61B0D0036F8E5 /* XCRemoteSwiftPackageReference "WalletConnectSwift" */,
 				555DE0B124BC3516002714B9 /* XCRemoteSwiftPackageReference "Web3.swift" */,
+				AD034D5A28A9FA700048DB4C /* XCRemoteSwiftPackageReference "WalletConnectSwift" */,
 			);
 			productRefGroup = 55B781A924A616A20036F8E5 /* Products */;
 			projectDirPath = "";
@@ -251,7 +245,6 @@
 			files = (
 				55B781E824A61CE60036F8E5 /* AppDelegate.swift in Sources */,
 				55B781FD24A61D480036F8E5 /* MainViewController.swift in Sources */,
-				55B781FF24A61D480036F8E5 /* HandshakeViewController.swift in Sources */,
 				55B7820024A61D480036F8E5 /* ActionsViewController.swift in Sources */,
 				55B781FE24A61D480036F8E5 /* WalletConnect.swift in Sources */,
 			);
@@ -458,14 +451,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZKG876RKJ8;
+				DEVELOPMENT_TEAM = W7DWVRNZFB;
 				INFOPLIST_FILE = ClientApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.gnosis.WalletConnectSwift.ClientApp;
+				PRODUCT_BUNDLE_IDENTIFIER = local.test.wcclient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -477,14 +470,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZKG876RKJ8;
+				DEVELOPMENT_TEAM = W7DWVRNZFB;
 				INFOPLIST_FILE = ClientApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.gnosis.WalletConnectSwift.ClientApp;
+				PRODUCT_BUNDLE_IDENTIFIER = local.test.wcclient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -532,9 +525,9 @@
 				minimumVersion = 0.4.2;
 			};
 		};
-		55B781DB24A61B0D0036F8E5 /* XCRemoteSwiftPackageReference "WalletConnectSwift" */ = {
+		AD034D5A28A9FA700048DB4C /* XCRemoteSwiftPackageReference "WalletConnectSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WalletConnect/WalletConnectSwift.git";
+			repositoryURL = "https://github.com/BitizenWallet/WalletConnectSwift.git";
 			requirement = {
 				branch = master;
 				kind = branch;
@@ -548,14 +541,9 @@
 			package = 555DE0B124BC3516002714B9 /* XCRemoteSwiftPackageReference "Web3.swift" */;
 			productName = Web3;
 		};
-		55B781DC24A61B0D0036F8E5 /* WalletConnectSwift */ = {
+		AD034D5B28A9FA700048DB4C /* WalletConnectSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 55B781DB24A61B0D0036F8E5 /* XCRemoteSwiftPackageReference "WalletConnectSwift" */;
-			productName = WalletConnectSwift;
-		};
-		55B7820224A61D600036F8E5 /* WalletConnectSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 55B781DB24A61B0D0036F8E5 /* XCRemoteSwiftPackageReference "WalletConnectSwift" */;
+			package = AD034D5A28A9FA700048DB4C /* XCRemoteSwiftPackageReference "WalletConnectSwift" */;
 			productName = WalletConnectSwift;
 		};
 /* End XCSwiftPackageProductDependency section */

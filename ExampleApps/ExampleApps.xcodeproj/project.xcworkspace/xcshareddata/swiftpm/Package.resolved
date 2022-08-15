@@ -1,0 +1,77 @@
+{
+  "pins" : [
+    {
+      "identity" : "bigint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/attaswift/BigInt.git",
+      "state" : {
+        "revision" : "108801d539eb014469c758bc0d7f734690791fb4",
+        "version" : "4.0.0"
+      }
+    },
+    {
+      "identity" : "cryptoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
+      "state" : {
+        "revision" : "039f56c5d7960f277087a0be51f5eb04ed0ec073",
+        "version" : "1.5.1"
+      }
+    },
+    {
+      "identity" : "nimble",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Quick/Nimble.git",
+      "state" : {
+        "revision" : "7a46a5fc86cb917f69e3daf79fcb045283d8f008",
+        "version" : "8.1.2"
+      }
+    },
+    {
+      "identity" : "promisekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mxcl/PromiseKit.git",
+      "state" : {
+        "revision" : "ed3192004c0b00b4b3d7baa9578ee655c66faae3",
+        "version" : "6.18.0"
+      }
+    },
+    {
+      "identity" : "quick",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Quick/Quick.git",
+      "state" : {
+        "revision" : "09b3becb37cb2163919a3842a4c5fa6ec7130792",
+        "version" : "2.2.1"
+      }
+    },
+    {
+      "identity" : "secp256k1.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Boilertalk/secp256k1.swift.git",
+      "state" : {
+        "revision" : "45e458ec3be46cf0a6eb68bc947f797852dc65d8",
+        "version" : "0.1.6"
+      }
+    },
+    {
+      "identity" : "walletconnectswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BitizenWallet/WalletConnectSwift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "7c5e30d56625908694b0756dcd7d3c58b15f7ae7"
+      }
+    },
+    {
+      "identity" : "web3.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Boilertalk/Web3.swift.git",
+      "state" : {
+        "revision" : "242f8878e91939db82e0d89e430d52d9a88ad9cf",
+        "version" : "0.4.2"
+      }
+    }
+  ],
+  "version" : 2
+}

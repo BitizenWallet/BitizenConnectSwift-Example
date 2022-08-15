@@ -26,7 +26,7 @@ class WalletConnect {
         // gnosis wc bridge: https://safe-walletconnect.gnosis.io/
         // test bridge with latest protocol version: https://bridge.walletconnect.org
         let wcUrl =  WCURL(topic: UUID().uuidString,
-                           bridgeURL: URL(string: "https://safe-walletconnect.gnosis.io/")!,
+                           bridgeURL: URL(string: "https://bridge.walletconnect.org")!,
                            key: try! randomKey())
         let clientMeta = Session.ClientMeta(name: "ExampleDApp",
                                             description: "WalletConnectSwift",
