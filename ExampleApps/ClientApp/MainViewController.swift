@@ -3,10 +3,13 @@
 //
 
 import UIKit
+import SDWebImage
+import BitizenConnectSwift
 
 class MainViewController: UIViewController {
     var actionsController: ActionsViewController!
-    var bitizenConnect: BitizenConnect!
+    var bitizenConnect: BitizenConnectExample!
+    @IBOutlet var connectButton: UIButton!
 
     @IBAction func connect(_ sender: Any) {
         let connectionUrl = bitizenConnect.connect()
@@ -20,7 +23,13 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bitizenConnect = BitizenConnect(delegate: self)
+        let transformer = SDImageResizingTransformer(size: CGSize(width: 40, height: 40), scaleMode: .fill)
+        connectButton.sd_setImage(with: URL.init(string: BitizenConnect.LOGO_URI), for: .normal, placeholderImage: nil, context: [.imageTransformer: transformer])
+        connectButton.layer.cornerRadius = 10
+        connectButton.layer.borderWidth = 2
+        connectButton.layer.borderColor = UIColor.link.cgColor
+                
+        bitizenConnect = BitizenConnectExample(delegate: self)
         bitizenConnect.reconnectIfNeeded()
     }
 

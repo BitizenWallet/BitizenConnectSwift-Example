@@ -15,7 +15,7 @@
       "location" : "https://github.com/BitizenWallet/BitizenConnectSwift.git",
       "state" : {
         "branch" : "master",
-        "revision" : "3b6aa081a6b6b402b39f7ce2cb432027abb085fe"
+        "revision" : "9df71ac03d42cb4bcfed22371aeb61b59ea2c826"
       }
     },
     {
@@ -52,6 +52,15 @@
       "state" : {
         "revision" : "09b3becb37cb2163919a3842a4c5fa6ec7130792",
         "version" : "2.2.1"
+      }
+    },
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage",
+      "state" : {
+        "branch" : "master",
+        "revision" : "3e48cb68d8e668d146dc59c73fb98cb628616236"
       }
     },
     {

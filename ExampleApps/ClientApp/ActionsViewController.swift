@@ -20,7 +20,7 @@ class ActionsViewController: UIViewController {
     var client: Client!
     var session: Session!
 
-    static func create(bitizenConnect: BitizenConnect) -> ActionsViewController {
+    static func create(bitizenConnect: BitizenConnectExample) -> ActionsViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "ActionsViewController") as! ActionsViewController
         controller.client = bitizenConnect.client
