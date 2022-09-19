@@ -5,6 +5,7 @@
 import UIKit
 import SDWebImage
 import BitizenConnectSwift
+import SafariServices
 
 class MainViewController: UIViewController {
     var actionsController: ActionsViewController!
@@ -13,11 +14,19 @@ class MainViewController: UIViewController {
 
     @IBAction func connect(_ sender: Any) {
         let connectionUrl = bitizenConnect.connect()
-        
+        let url = URL(string: connectionUrl)!;
         print(connectionUrl)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            UIApplication.shared.open(URL(string: connectionUrl)!, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: [.universalLinksOnly : true]) { (success) in
+                if(!success){
+                    let vc = SFSafariViewController(url: url)
+                    self.present(vc, animated: true, completion: nil)
+                }
+                else{
+                    print("working!!")
+                }
+            }
         }
     }
 
