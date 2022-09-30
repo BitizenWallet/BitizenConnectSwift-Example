@@ -16,87 +16,99 @@ class ActionsViewController: UIViewController {
     @IBOutlet weak var ethSignTransactionButton: UIButton!
     @IBOutlet weak var ethSendRawTransactionButton: UIButton!
     @IBOutlet weak var ethCustomRequestButton: UIButton!
+    
+    var api:BitizenConnectApi!
+    var chainId: Int!
+    var accounts: [String]!
 
-    var client: Client!
-    var session: Session!
-
-    static func create(bitizenConnect: BitizenConnectExample) -> ActionsViewController {
+    static func create(api: BitizenConnectApi) -> ActionsViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "ActionsViewController") as! ActionsViewController
-        controller.client = bitizenConnect.client
-        controller.session = bitizenConnect.session
+        controller.api = api
         return controller
     }
 
     var walletAccount: String {
-        return session.walletInfo!.accounts[0]
+        return accounts[0]
     }
 
     @IBAction func disconnect(_ sender: Any) {
-        guard let session = session else { return }
-        try? client.disconnect(from: session)
+//        guard let session = session else { return }
+//        try? client.disconnect(from: session)
+        api.disconnect()
     }
 
     // personal_sign should send a human readable message
     @IBAction func personal_sign(_ sender: Any) {
-        try? client.personal_sign(url: session.url, message: "Hi there!", account: session.walletInfo!.accounts[0]) {
-            [weak self] response in
+//        try? client.personal_sign(url: session.url, message: "Hi there!", account: session.walletInfo!.accounts[0]) {
+//            [weak self] response in
+//            self?.handleReponse(response, expecting: "Signature")
+//        }
+        api.personalSign(message: "Hi there!", account: walletAccount) {  [weak self] response in
             self?.handleReponse(response, expecting: "Signature")
         }
+//        api.personalSign(message: "Hi there!") { response in
+//
+//        };
     }
 
     // eth_sign should send a properly formed hash: keccak256("\x19Ethereum Signed Message:\n" + len(message) + message))
     @IBAction func eth_sign(_ sender: Any) {
-        try? client.eth_sign(url: session.url, account: session.walletInfo!.accounts[0], message: "0x0123") {
-            [weak self] response in
+//        try? client.eth_sign(url: session.url, account: session.walletInfo!.accounts[0], message: "0x0123") {
+//            [weak self] response in
+//            self?.handleReponse(response, expecting: "Signature")
+//        }
+        api.ethSign(message: "0x0123", account: walletAccount) {  [weak self] response in
             self?.handleReponse(response, expecting: "Signature")
         }
     }
 
     @IBAction func eth_signTypedData(_ sender: Any) {
-        try? client.eth_signTypedData(url: session.url,
-                                      account: session.walletInfo!.accounts[0],
-                                      message: Stub.typedData) {
-            [weak self] response in
-            self?.handleReponse(response, expecting: "Signature") }
+//        try? client.eth_signTypedData(url: session.url,
+//                                      account: session.walletInfo!.accounts[0],
+//                                      message: Stub.typedData) {
+//            [weak self] response in
+//            self?.handleReponse(response, expecting: "Signature") }
+        api.ethSignTypedData(message: Stub.typedData, account: walletAccount) {  [weak self] response in
+            self?.handleReponse(response, expecting: "Signature")
+        }
     }
 
     @IBAction func eth_sendTransaction(_ sender: Any) {
         // example when we make 2 chained requests: 1) get nonce 2) sendTransaction
         // We recommend to use Rainbow Wallet to test this reques
-        try? client.send(nonceRequest()) { [weak self] response in
-            guard let self = self, let nonce = self.nonce(from: response) else { return }
-            let transaction = Stub.transaction(from: self.walletAccount, nonce: nonce)
-            try? self.client.eth_sendTransaction(url: response.url, transaction: transaction) { [weak self] response in
-                self?.handleReponse(response, expecting: "Hash")
-            }
-        }
-    }
-
-    @IBAction func eth_signTransaction(_ sender: Any) {
-        let transaction = Stub.transaction(from: self.walletAccount, nonce: "0x0")
-        try? self.client.eth_signTransaction(url: session.url, transaction: transaction) { [weak self] response in
-            self?.handleReponse(response, expecting: "Signature")
-        }
-    }
-
-    @IBAction func eth_sendRawTransaction(_ sender: Any) {
-        try? client.eth_sendRawTransaction(url: session.url, data: Stub.data) { [weak self] response in
+        
+//        try? client.send(nonceRequest()) { [weak self] response in
+//            guard let self = self, let nonce = self.nonce(from: response) else { return }
+//            let transaction = Stub.transaction(from: self.walletAccount, nonce: nonce)
+//            try? self.client.eth_sendTransaction(url: response.url, transaction: transaction) { [weak self] response in
+//                self?.handleReponse(response, expecting: "Hash")
+//            }
+//        }
+        let transaction = Stub.transaction(from: self.walletAccount, nonce: "0")
+        api.ethSendTransaction(transaction: transaction) {  [weak self] response in
             self?.handleReponse(response, expecting: "Hash")
         }
     }
 
+    @IBAction func eth_signTransaction(_ sender: Any) {
+    }
+
+    @IBAction func eth_sendRawTransaction(_ sender: Any) {
+    }
+
     @IBAction func customRequest(_ sender: Any) {
         // We recommend to use Rainbow Wallet to test this reques
-        try? client.send(.eth_gasPrice(url: session.url)) { [weak self] response in
-            self?.handleReponse(response, expecting: "Gas Price")
-        }
+//        try? client.send(.eth_gasPrice(url: session.url)) { [weak self] response in
+//            self?.handleReponse(response, expecting: "Gas Price")
+//        }
     }
 
     @IBAction func close(_ sender: Any) {
-        for session in client.openSessions() {
-            try? client.disconnect(from: session)
-        }
+//        for session in client.openSessions() {
+//            try? client.disconnect(from: session)
+//        }
+        api.disconnect()
         dismiss(animated: true)
     }
 
@@ -122,9 +134,9 @@ class ActionsViewController: UIViewController {
         self.present(alert, animated: true)
     }
 
-    private func nonceRequest() -> Request {
-        return .eth_getTransactionCount(url: session.url, account: session.walletInfo!.accounts[0])
-    }
+//    private func nonceRequest() -> Request {
+//        return .eth_getTransactionCount(url: session.url, account: session.walletInfo!.accounts[0])
+//    }
 
     private func nonce(from response: Response) -> String? {
         return try? response.result(as: String.self)
