@@ -138,7 +138,6 @@
 			);
 			mainGroup = 55B7819F24A616A20036F8E5;
 			packageReferences = (
-				555DE0B124BC3516002714B9 /* XCRemoteSwiftPackageReference "Web3.swift" */,
 				C9F5356C28E6F7DF00A5F485 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 55B781A924A616A20036F8E5 /* Products */;
@@ -374,14 +373,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		555DE0B124BC3516002714B9 /* XCRemoteSwiftPackageReference "Web3.swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Boilertalk/Web3.swift.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.4.2;
-			};
-		};
 		C9F5356C28E6F7DF00A5F485 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";

@@ -5,112 +5,202 @@
 import UIKit
 import BitizenConnectSwift
 
+class ApiCell : UITableViewCell {
+    let label = UILabel()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        label.font = UIFont.systemFont(ofSize: 17)
+        self.contentView.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(20)
+            make.centerY.equalToSuperview()
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
 /// For testing we recommend to use Rainbow Wallet
 /// MetaMask does not support `eth_gasPrice` and `eth_getTransactionCount` at the moment of testing 01.09.2021
-class ActionsViewController: UIViewController {
-    @IBOutlet weak var disconnectButton: UIButton!
-    @IBOutlet weak var personalSignButton: UIButton!
-    @IBOutlet weak var ethSignButton: UIButton!
-    @IBOutlet weak var ethSignTypedDataButton: UIButton!
-    @IBOutlet weak var ethSendTransactionButton: UIButton!
-    @IBOutlet weak var ethSignTransactionButton: UIButton!
-    @IBOutlet weak var ethSendRawTransactionButton: UIButton!
-    @IBOutlet weak var ethCustomRequestButton: UIButton!
-    
+class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var api:BitizenConnectApi!
     var chainId: Int!
     var accounts: [String]!
+    var selectIndex: Int = 0
+    var accountLabel = UILabel()
 
-    static func create(api: BitizenConnectApi) -> ActionsViewController {
+    static func create(api: BitizenConnectApi, accounts: [String], chainId: Int) -> ActionsViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "ActionsViewController") as! ActionsViewController
+        let controller =  storyboard.instantiateViewController(withIdentifier: "ActionsViewController") as! ActionsViewController
         controller.api = api
+        controller.accounts = accounts
+        controller.chainId = chainId
         return controller
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor(red: 0.949, green: 0.945, blue: 0.965, alpha: 1)
+        
+        let bigTitle = UILabel()
+        bigTitle.text = "Wallet"
+        bigTitle.font = UIFont.boldSystemFont(ofSize: 34)
+        bigTitle.textColor = UIColor.black
+        self.view.addSubview(bigTitle)
+        bigTitle.sizeToFit()
+        bigTitle.frame = CGRect(x: 15, y: 15, width: bigTitle.frame.size.width, height: bigTitle.frame.size.height)
+        
+        let chainLabel = UILabel()
+        chainLabel.text = "chainId:\(String(chainId))"
+        chainLabel.font = UIFont.systemFont(ofSize: 13)
+        chainLabel.textColor =  UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        chainLabel.sizeToFit()
+        self.view.addSubview(chainLabel)
+        chainLabel.frame = CGRect(x: bigTitle.frame.origin.x, y: bigTitle.frame.maxY + 10, width: chainLabel.frame.size.width, height: chainLabel.frame.size.height)
+        
+        let button = UIButton(type: .roundedRect)
+        button.backgroundColor = UIColor.white
+        button.frame = CGRectMake(bigTitle.frame.origin.x, chainLabel.frame.maxY + 10, self.view.frame.size.width - 2 * bigTitle.frame.origin.x, 60)
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 12
+        self.view.addSubview(button)
+        
+        let leftLabel = UILabel()
+        leftLabel.text = "Connected"
+        leftLabel.textColor = UIColor.black.withAlphaComponent(0.5)
+        leftLabel.font = UIFont.systemFont(ofSize: 17)
+        button.addSubview(leftLabel)
+        leftLabel.sizeToFit()
+        leftLabel.frame = CGRect(x: 20, y: 0, width: leftLabel.frame.size.width, height: button.frame.height)
+        
+        
+        accountLabel.textColor = UIColor.black
+        accountLabel.font = UIFont.systemFont(ofSize: 17)
+        button.addSubview(accountLabel)
+        accountLabel.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.right.equalToSuperview().offset(-20)
+        }
+        changeAccount()
+        
+        let line = UIView()
+        line.backgroundColor = UIColor(red: 0.851, green: 0.851, blue: 0.851, alpha: 0.5)
+        self.view.addSubview(line)
+        line.frame = CGRect(x: bigTitle.frame.origin.x, y: button.frame.maxY + 10 , width: self.view.frame.width - bigTitle.frame.origin.x, height: 1)
+        
+        let apiLabel = UILabel()
+        self.view.addSubview(apiLabel)
+        apiLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        apiLabel.textColor = UIColor.black
+        apiLabel.text = "API"
+        apiLabel.sizeToFit()
+        apiLabel.frame = CGRect(x: bigTitle.frame.origin.x, y: line.frame.maxY + 10, width: apiLabel.frame.width, height: apiLabel.frame.height)
+        
+        let table = UITableView(frame: CGRect.zero, style: .grouped)
+        self.view.addSubview(table)
+        table.register(ApiCell.self, forCellReuseIdentifier: NSStringFromClass(ApiCell.self))
+        table.delegate = self
+        table.dataSource = self
+        table.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.top.equalTo(apiLabel.snp.bottom).offset(10)
+            make.bottom.equalToSuperview()
+        }
+        
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: ApiCell  = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(ApiCell.self)) as! ApiCell
+        switch (indexPath.section) {
+        case 0:
+            cell.label.text = "ETH sign"
+        case 1:
+            cell.label.text = "Personal Sign"
+        case 2:
+            cell.label.text = "Sign typed date"
+        case 3:
+            cell.label.text = "ETH send transaction"
+        case 4:
+            cell.label.text = "Disconnect"
+        default: break
+        }
+        return cell
+    }
+    
+    func changeAccount() {
+        let str: String = accounts[self.selectIndex]
+        let range = NSRange(location: 6, length: str.lengthOfBytes(using: String.Encoding.utf8) - 6 - 4)
+        accountLabel.text =  (str as NSString).replacingCharacters(in: range, with: "...")
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch (indexPath.row) {
+        case 0:
+            api.ethSign(message: "0x0123", account: walletAccount) {  [weak self] response in
+                self?.handleReponse(response, expecting: "Signature")
+            }
+        case 1:
+            api.personalSign(message: "Hi there!", account: walletAccount) {  [weak self] response in
+                self?.handleReponse(response, expecting: "Signature")
+            }
+        case 2:
+            api.ethSignTypedData(message: Stub.typedData, account: walletAccount) {  [weak self] response in
+                self?.handleReponse(response, expecting: "Signature")
+            }
+        case 3:
+            let transaction = Stub.transaction(from: self.walletAccount, nonce: "0")
+            api.ethSendTransaction(transaction: transaction) {  [weak self] response in
+                self?.handleReponse(response, expecting: "Hash")
+            }
+        case 4:
+            api.disconnect()
+            dismiss(animated: true)
+        default:break
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        api.disconnect()
+    }
+    
+    @objc func buttonPressed() {
+        if (accounts.count > 1) {
+            let alert = UIAlertController(title: "Select your address", message: nil, preferredStyle: .actionSheet)
+            for index in 0..<accounts.count  {
+                alert.addAction(UIAlertAction(title: accounts[index], style: .default,handler: { [weak self]  _ in
+                    self?.selectIndex = index
+                    self?.changeAccount()
+                }))
+            }
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            self.present(alert, animated: true)
+        }
     }
 
     var walletAccount: String {
-        return accounts[0]
+        return accounts[self.selectIndex]
     }
 
-    @IBAction func disconnect(_ sender: Any) {
-//        guard let session = session else { return }
-//        try? client.disconnect(from: session)
-        api.disconnect()
-    }
-
-    // personal_sign should send a human readable message
-    @IBAction func personal_sign(_ sender: Any) {
-//        try? client.personal_sign(url: session.url, message: "Hi there!", account: session.walletInfo!.accounts[0]) {
-//            [weak self] response in
-//            self?.handleReponse(response, expecting: "Signature")
-//        }
-        api.personalSign(message: "Hi there!", account: walletAccount) {  [weak self] response in
-            self?.handleReponse(response, expecting: "Signature")
-        }
-//        api.personalSign(message: "Hi there!") { response in
-//
-//        };
-    }
-
-    // eth_sign should send a properly formed hash: keccak256("\x19Ethereum Signed Message:\n" + len(message) + message))
-    @IBAction func eth_sign(_ sender: Any) {
-//        try? client.eth_sign(url: session.url, account: session.walletInfo!.accounts[0], message: "0x0123") {
-//            [weak self] response in
-//            self?.handleReponse(response, expecting: "Signature")
-//        }
-        api.ethSign(message: "0x0123", account: walletAccount) {  [weak self] response in
-            self?.handleReponse(response, expecting: "Signature")
-        }
-    }
-
-    @IBAction func eth_signTypedData(_ sender: Any) {
-//        try? client.eth_signTypedData(url: session.url,
-//                                      account: session.walletInfo!.accounts[0],
-//                                      message: Stub.typedData) {
-//            [weak self] response in
-//            self?.handleReponse(response, expecting: "Signature") }
-        api.ethSignTypedData(message: Stub.typedData, account: walletAccount) {  [weak self] response in
-            self?.handleReponse(response, expecting: "Signature")
-        }
-    }
-
-    @IBAction func eth_sendTransaction(_ sender: Any) {
-        // example when we make 2 chained requests: 1) get nonce 2) sendTransaction
-        // We recommend to use Rainbow Wallet to test this reques
-        
-//        try? client.send(nonceRequest()) { [weak self] response in
-//            guard let self = self, let nonce = self.nonce(from: response) else { return }
-//            let transaction = Stub.transaction(from: self.walletAccount, nonce: nonce)
-//            try? self.client.eth_sendTransaction(url: response.url, transaction: transaction) { [weak self] response in
-//                self?.handleReponse(response, expecting: "Hash")
-//            }
-//        }
-        let transaction = Stub.transaction(from: self.walletAccount, nonce: "0")
-        api.ethSendTransaction(transaction: transaction) {  [weak self] response in
-            self?.handleReponse(response, expecting: "Hash")
-        }
-    }
-
-    @IBAction func eth_signTransaction(_ sender: Any) {
-    }
-
-    @IBAction func eth_sendRawTransaction(_ sender: Any) {
-    }
-
-    @IBAction func customRequest(_ sender: Any) {
-        // We recommend to use Rainbow Wallet to test this reques
-//        try? client.send(.eth_gasPrice(url: session.url)) { [weak self] response in
-//            self?.handleReponse(response, expecting: "Gas Price")
-//        }
-    }
-
-    @IBAction func close(_ sender: Any) {
-//        for session in client.openSessions() {
-//            try? client.disconnect(from: session)
-//        }
-        api.disconnect()
-        dismiss(animated: true)
-    }
 
     private func handleReponse(_ response: Response, expecting: String) {
         DispatchQueue.main.async {
@@ -134,23 +224,9 @@ class ActionsViewController: UIViewController {
         self.present(alert, animated: true)
     }
 
-//    private func nonceRequest() -> Request {
-//        return .eth_getTransactionCount(url: session.url, account: session.walletInfo!.accounts[0])
+//    private func nonce(from response: Response) -> String? {
+//        return try? response.result(as: String.self)
 //    }
-
-    private func nonce(from response: Response) -> String? {
-        return try? response.result(as: String.self)
-    }
-}
-
-extension Request {
-    static func eth_getTransactionCount(url: WCURL, account: String) -> Request {
-        return try! Request(url: url, method: "eth_getTransactionCount", params: [account, "latest"])
-    }
-
-    static func eth_gasPrice(url: WCURL) -> Request {
-        return Request(url: url, method: "eth_gasPrice")
-    }
 }
 
 fileprivate enum Stub {

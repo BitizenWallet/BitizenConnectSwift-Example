@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "BigInt",
-        "repositoryURL": "https://github.com/attaswift/BigInt.git",
-        "state": {
-          "branch": null,
-          "revision": "108801d539eb014469c758bc0d7f734690791fb4",
-          "version": "4.0.0"
-        }
-      },
-      {
         "package": "CryptoSwift",
         "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift.git",
         "state": {
@@ -20,57 +11,12 @@
         }
       },
       {
-        "package": "Nimble",
-        "repositoryURL": "https://github.com/Quick/Nimble.git",
-        "state": {
-          "branch": null,
-          "revision": "7a46a5fc86cb917f69e3daf79fcb045283d8f008",
-          "version": "8.1.2"
-        }
-      },
-      {
-        "package": "PromiseKit",
-        "repositoryURL": "https://github.com/mxcl/PromiseKit.git",
-        "state": {
-          "branch": null,
-          "revision": "43772616c46a44a9977e41924ae01d0e55f2f9ca",
-          "version": "6.18.1"
-        }
-      },
-      {
-        "package": "Quick",
-        "repositoryURL": "https://github.com/Quick/Quick.git",
-        "state": {
-          "branch": null,
-          "revision": "09b3becb37cb2163919a3842a4c5fa6ec7130792",
-          "version": "2.2.1"
-        }
-      },
-      {
-        "package": "secp256k1",
-        "repositoryURL": "https://github.com/Boilertalk/secp256k1.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "45e458ec3be46cf0a6eb68bc947f797852dc65d8",
-          "version": "0.1.6"
-        }
-      },
-      {
         "package": "SnapKit",
         "repositoryURL": "https://github.com/SnapKit/SnapKit.git",
         "state": {
           "branch": "develop",
           "revision": "07c5d1f6044701d97e94dc11157259e8811977be",
           "version": null
-        }
-      },
-      {
-        "package": "Web3",
-        "repositoryURL": "https://github.com/Boilertalk/Web3.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "242f8878e91939db82e0d89e430d52d9a88ad9cf",
-          "version": "0.4.2"
         }
       }
     ]

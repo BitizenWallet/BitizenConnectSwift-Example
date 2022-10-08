@@ -15,6 +15,18 @@ class MainViewController: UIViewController {
     @objc func connect() {
         api.connect(dappName: "ExampleDapp", dappDescription: "BitizenConnectSwift", dappUrl: URL(string: "https://safe.gnosis.io")!)
     }
+    
+    func rangeOf(content: String,contentBlack: String) -> NSRange? {
+        guard let range =  content.range(of: contentBlack) else {
+            return nil
+        }
+        let utf16view = content.utf16
+        if let from = range.lowerBound.samePosition(in: utf16view), let to = range.upperBound.samePosition(in: utf16view) {
+            return NSRange(location: utf16view.distance(from: utf16view.startIndex, to: from),
+                           length: utf16view.distance(from: from, to: to))
+        }
+        return nil
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +51,13 @@ class MainViewController: UIViewController {
         let content = "Simple integration with Bitizen SDKs in less than 5 mins"
         let contentBlack = "5 mins"
         let contentLabel = UILabel()
-        contentLabel.font = UIFont.systemFont(ofSize: 17)
-        contentLabel.text = content
         contentLabel.numberOfLines = 0
         whiteView.addSubview(contentLabel)
+        let attri_str = NSMutableAttributedString(string: content, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17)])
+        let range = rangeOf(content: content, contentBlack: contentBlack)
+        attri_str.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 17), range: range!)
+        
+        contentLabel.attributedText = attri_str
         contentLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(15)
@@ -88,7 +103,7 @@ extension MainViewController: BitizenConnectDelegate {
 
     func didConnect(chainId: Int?, accounts: [String]?) {
         onMainThread { [unowned self] in
-            self.actionsController = ActionsViewController.create(api: self.api)//: self.bitizenConnect)
+            self.actionsController = ActionsViewController.create(api: self.api, accounts: accounts!,chainId: chainId!)
             if self.presentedViewController == nil {
                 self.present(self.actionsController, animated: false)
             }
