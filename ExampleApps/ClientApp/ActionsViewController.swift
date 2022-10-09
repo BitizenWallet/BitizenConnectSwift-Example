@@ -10,12 +10,23 @@ class ApiCell : UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        let backView = UIView()
+        backView.backgroundColor = UIColor.white
+        backView.layer.masksToBounds = true
+        backView.layer.cornerRadius = 12
+        self.contentView.addSubview(backView)
+        backView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         label.font = UIFont.systemFont(ofSize: 17)
         self.contentView.addSubview(label)
         label.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(20)
             make.centerY.equalToSuperview()
         }
+        self.backgroundColor = UIColor.clear
     }
     
     required init?(coder: NSCoder) {
@@ -79,14 +90,31 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         leftLabel.sizeToFit()
         leftLabel.frame = CGRect(x: 20, y: 0, width: leftLabel.frame.size.width, height: button.frame.height)
         
-        
         accountLabel.textColor = UIColor.black
         accountLabel.font = UIFont.systemFont(ofSize: 17)
         button.addSubview(accountLabel)
-        accountLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.right.equalToSuperview().offset(-20)
+
+        if (accounts.count > 1) {
+            let imageView = UIImageView(image: UIImage(named: "Vector"))
+            button.addSubview(imageView)
+            imageView.snp.makeConstraints { make in
+                make.width.equalTo(7)
+                make.height.equalTo(12)
+                make.right.equalToSuperview().offset(-20)
+                make.centerY.equalToSuperview()
+            }
+            
+            accountLabel.snp.makeConstraints { make in
+                make.top.bottom.equalToSuperview()
+                make.right.equalTo(imageView.snp.left).offset(-5)
+            }
+        } else {
+            accountLabel.snp.makeConstraints { make in
+                make.top.bottom.equalToSuperview()
+                make.right.equalToSuperview().offset(-20)
+            }
         }
+        
         changeAccount()
         
         let line = UIView()
@@ -102,18 +130,20 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         apiLabel.sizeToFit()
         apiLabel.frame = CGRect(x: bigTitle.frame.origin.x, y: line.frame.maxY + 10, width: apiLabel.frame.width, height: apiLabel.frame.height)
         
-        let table = UITableView(frame: CGRect.zero, style: .grouped)
+        let table = UITableView(frame: CGRect.zero, style: .plain)
         self.view.addSubview(table)
         table.register(ApiCell.self, forCellReuseIdentifier: NSStringFromClass(ApiCell.self))
+        table.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
         table.delegate = self
         table.dataSource = self
+        table.backgroundColor = UIColor.clear
+        table.separatorStyle = .none
         table.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
+            make.left.equalToSuperview().offset(15)
+            make.right.equalToSuperview().offset(-15)
             make.top.equalTo(apiLabel.snp.bottom).offset(10)
             make.bottom.equalToSuperview()
         }
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -121,24 +151,29 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: ApiCell  = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(ApiCell.self)) as! ApiCell
-        switch (indexPath.section) {
-        case 0:
-            cell.label.text = "ETH sign"
-        case 1:
-            cell.label.text = "Personal Sign"
-        case 2:
-            cell.label.text = "Sign typed date"
-        case 3:
-            cell.label.text = "ETH send transaction"
-        case 4:
-            cell.label.text = "Disconnect"
-        default: break
+        if (indexPath.row == 0) {
+            let cell: ApiCell  = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(ApiCell.self)) as! ApiCell
+            switch (indexPath.section) {
+            case 0:
+                cell.label.text = "ETH sign"
+            case 1:
+                cell.label.text = "Personal Sign"
+            case 2:
+                cell.label.text = "Sign typed date"
+            case 3:
+                cell.label.text = "ETH send transaction"
+            case 4:
+                cell.label.text = "Disconnect"
+            default: break
+            }
+            return cell
         }
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self))!
+        cell.backgroundColor = UIColor.clear
         return cell
     }
     
@@ -149,7 +184,7 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch (indexPath.row) {
+        switch (indexPath.section) {
         case 0:
             api.ethSign(message: "0x0123", account: walletAccount) {  [weak self] response in
                 self?.handleReponse(response, expecting: "Signature")
@@ -175,7 +210,10 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        if (indexPath.row == 0) {
+            return 60
+        }
+        return 10
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -223,10 +261,6 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
         alert.addAction(UIAlertAction(title: "Close", style: .cancel))
         self.present(alert, animated: true)
     }
-
-//    private func nonce(from response: Response) -> String? {
-//        return try? response.result(as: String.self)
-//    }
 }
 
 fileprivate enum Stub {
