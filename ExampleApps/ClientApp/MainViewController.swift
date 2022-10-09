@@ -13,7 +13,7 @@ class MainViewController: UIViewController {
     
 
     @objc func connect() {
-        api.connect(dappName: "ExampleDapp", dappDescription: "BitizenConnectSwift", dappUrl: URL(string: "https://safe.gnosis.io")!)
+        api.connect(dappName: "ExampleDapp", dappDescription: "BitizenConnectSwift", dappUrl: URL(string: "https://safe.gnosis.io")!,callbackUrl: "bitizenDapp://")
     }
     
     func rangeOf(content: String,contentBlack: String) -> NSRange? {
