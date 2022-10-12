@@ -147,7 +147,7 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -159,14 +159,12 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let cell: ApiCell  = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(ApiCell.self)) as! ApiCell
             switch (indexPath.section) {
             case 0:
-                cell.label.text = "ETH sign"
-            case 1:
                 cell.label.text = "Personal Sign"
-            case 2:
+            case 1:
                 cell.label.text = "Sign typed date"
-            case 3:
+            case 2:
                 cell.label.text = "ETH send transaction"
-            case 4:
+            case 3:
                 cell.label.text = "Disconnect"
             default: break
             }
@@ -186,23 +184,19 @@ class ActionsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (indexPath.section) {
         case 0:
-            api.ethSign(message: "0x0123", account: walletAccount) {  [weak self] response in
-                self?.handleReponse(response, expecting: "Signature")
-            }
-        case 1:
             api.personalSign(message: "Hi there!", account: walletAccount) {  [weak self] response in
                 self?.handleReponse(response, expecting: "Signature")
             }
-        case 2:
+        case 1:
             api.ethSignTypedData(message: Stub.typedData, account: walletAccount) {  [weak self] response in
                 self?.handleReponse(response, expecting: "Signature")
             }
-        case 3:
+        case 2:
             let transaction = Stub.transaction(from: self.walletAccount, nonce: "0")
             api.ethSendTransaction(transaction: transaction) {  [weak self] response in
                 self?.handleReponse(response, expecting: "Hash")
             }
-        case 4:
+        case 3:
             api.disconnect()
             dismiss(animated: true)
         default:break
